@@ -1,15 +1,17 @@
 package com.ServiceImpl;
 
-import java.util.ArrayList;
+
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ServiceInterface.AuthInterface;
-import com.dto.UserDto;
+
 import com.entity.User;
 import com.repository.AuthRepository;
 
@@ -17,29 +19,40 @@ import com.repository.AuthRepository;
 public class AuthServiceImpl implements AuthInterface
 {
 	@Autowired
-	private AuthRepository authrepository;
+	private AuthRepository authRepository;
 
-	//@Autowired
-	private PasswordEncoder passwordencoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-	@Override
-	public UserDetails loasUserByUsername(String email)throws UsernameNotFoundException
-	{
-
-		User user;
-		user = authrepository.findByEmail(email);
-		if (user == null)
-		{  
-		throw new UsernameNotFoundException("User not found with Email: " + email);
-		}
-             return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),new ArrayList<>());
-		}
-
-	    @Override
-	   public boolean comaparePassword(String email, String hashpassword)
+	 @Override
+	 public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException  
 	  {
-		return passwordencoder.matches(hashpassword, hashpassword);
+		User user;
+		user = authRepository.findByEmail(email);
+		if (user == null)
+		{
+			throw new UsernameNotFoundException("User not found with Email: " + email);
+		}
+
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),getAuthority(user));
+	   }
+	
+	
+
+	  private Collection<? extends GrantedAuthority> getAuthority(User user)
+	  {
+		
+		return null;
 	  }
 
+
+
+		@Override
+	   public boolean comaparePassword(String email, String hashpassword)
+	  {
+		return passwordEncoder.matches(hashpassword, hashpassword);
+	  }
+
+	
 		
 }
