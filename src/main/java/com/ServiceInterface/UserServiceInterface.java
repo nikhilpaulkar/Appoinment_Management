@@ -7,22 +7,24 @@ import org.springframework.data.domain.Page;
 
 
 import com.dto.UserDto;
-import com.entity.User;
+import com.entity.Users;
 
 public interface UserServiceInterface
 {
 
-	User creatUser(UserDto userDto);
+	Users creatUser(UserDto userDto);
 
-	User FindByEmail(String email);
+	Users FindByEmail(String email);
 
 	
-	Page<?> getUsers(String search, String pageNumber, String pageSize);
+	
     
 	public void deleteUser(Integer userId);
 	
 	UserDto updateUser(UserDto userDto,Integer id);
 
 	UserDto getUserId(Integer id);
+
+	Page<IUserListDto> getAllUsers(String search, String pageNumber, String pageSize);
 
 }

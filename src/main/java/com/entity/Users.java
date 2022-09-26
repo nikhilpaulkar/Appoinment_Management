@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Where(clause="isactive=true")
 @SQLDelete(sql="UPDATE userentity SET isactive=false WHERE id=?")
 @Table(name="userentity")
-public class User implements Serializable
+public class Users implements Serializable
 {
 
 	/**
@@ -36,11 +36,11 @@ public class User implements Serializable
 	private String email;
 	private String password;
 	private String name;
-	private  Boolean isactive =true;
+	private  boolean isactive =true;
 
-//	@OneToMany(fetch=FetchType.LAZY,mappedBy="task.user",cascade=CascadeType.ALL)
-//	@JsonIgnore
-//	private List<UserRoleEntity> userrole;
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="task.user",cascade=CascadeType.ALL)
+	@JsonIgnore
+	private List<UserRoleEntity> userrole;
 
 	public int getId() {
 		return id;
@@ -74,37 +74,39 @@ public class User implements Serializable
 		this.name = name;
 	}
 
-	public Boolean getIsactive() {
+	public boolean isIsactive() {
 		return isactive;
 	}
 
-	public void setIsactive(Boolean isactive) {
+	public void setIsactive(boolean isactive) {
 		this.isactive = isactive;
 	}
+	public List<UserRoleEntity> getUserrole() {
+		return userrole;
+		}
 
-//	public List<UserRoleEntity> getUserrole() {
-//		return userrole;
-//	}
-//
-//	public void setUserrole(List<UserRoleEntity> userrole) {
-//		this.userrole = userrole;
-//	}
+	public void setUserrole(List<UserRoleEntity> userrole) {		this.userrole = userrole;
+	}
 
 	
 
-	public User() {
+	public Users(int id, String email, String password, String name, boolean isactive, List<UserRoleEntity> userrole) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.isactive = isactive;
+		this.userrole = userrole;
+	}
+
+	public Users() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-    public User(int id, String email, String password, String name, Boolean isactive) {
-	super();
-	this.id = id;
-	this.email = email;
-	this.password = password;
-	this.name = name;
-	this.isactive = isactive;
-}
+	
+
 	  
 	  
 	  

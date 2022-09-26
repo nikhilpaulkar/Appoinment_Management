@@ -3,11 +3,10 @@ package com.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.entity.Users;
-@Repository
-public interface AuthRepository extends JpaRepository<Users, Integer>
-{
+import com.entity.PermissionEntity;
 
-	Users findByEmail(String email);
+@Repository
+public interface PermissionRepository extends JpaRepository<PermissionEntity , Integer>
+{
 
 }

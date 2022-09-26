@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ServiceInterface.AuthInterface;
 
-import com.entity.User;
+import com.entity.Users;
 import com.repository.AuthRepository;
 
 @Service
@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthInterface
 	 @Override
 	 public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException  
 	  {
-		User user;
+		Users user;
 		user = authRepository.findByEmail(email);
 		if (user == null)
 		{
@@ -39,7 +39,7 @@ public class AuthServiceImpl implements AuthInterface
 	
 	
 
-	  private Collection<? extends GrantedAuthority> getAuthority(User user)
+	  private Collection<? extends GrantedAuthority> getAuthority(Users user)
 	  {
 		
 		return null;

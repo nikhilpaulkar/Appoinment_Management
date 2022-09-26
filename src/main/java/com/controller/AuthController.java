@@ -20,7 +20,7 @@ import com.dto.LoggerDto;
 import com.dto.SucessResponseDto;
 import com.dto.TokenKeys;
 import com.dto.UserDto;
-import com.entity.User;
+import com.entity.Users;
 import com.repository.UserRepository;
 import com.utility.PasswordValidator;
 import com.webSecurity.JwtAuthRequest;
@@ -46,7 +46,7 @@ public class AuthController
   @Autowired
   private JwtTokenUtil jwtTokenUtil;
   
-  //@Autowired
+  @Autowired
   private LoggerServiceInterface loggerServiceInterface;
   
   
@@ -59,7 +59,7 @@ public class AuthController
 	   //String password=userDto.getPassword();
 	if(PasswordValidator.isValidforEmail(email))
     {
-	 User user=this.userRepository.findByEmail(userDto.getEmail());
+	 Users user=this.userRepository.findByEmail(userDto.getEmail());
 		 if(user!=null)
 		 {
 			 return new ResponseEntity<>("user already register ",HttpStatus.NOT_ACCEPTABLE);
@@ -87,7 +87,7 @@ public class AuthController
 
 		try 
 		{
-            User user = userServiceImpl.FindByEmail(authenticationRequest.getEmail());
+            Users user = userServiceImpl.FindByEmail(authenticationRequest.getEmail());
 			
 			
 			if (authServiceImpl.comaparePassword(user.getPassword(), authenticationRequest.getPassword()));
@@ -99,7 +99,7 @@ public class AuthController
 				Calendar calender = Calendar.getInstance();
 				calender.add(Calendar.HOUR_OF_DAY, 5);
 				logger.setExpiredAt(calender.getTime());
-				//loggerServiceInterface.createLogger(logger, user);
+				loggerServiceInterface.createLogger(logger, user);
 				return ResponseEntity.ok(new SucessResponseDto("success", "success", new TokenKeys(user.getId(),user.getName(),user.getEmail(), token)));
 				
 			}

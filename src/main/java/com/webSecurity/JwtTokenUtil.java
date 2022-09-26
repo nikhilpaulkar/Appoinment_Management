@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.entity.User;
+import com.entity.Users;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -70,7 +70,7 @@ public class JwtTokenUtil
 
 
  	// generate token for user
- 	public String generateToken(User userDetails) {
+ 	public String generateToken(Users userDetails) {
 
  		Map<String, Object> claims = new HashMap<>();
  		return doGenerateToken(claims, userDetails.getEmail());

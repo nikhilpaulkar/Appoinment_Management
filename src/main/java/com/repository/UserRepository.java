@@ -5,14 +5,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.entity.User;
+import com.ServiceInterface.IUserListDto;
+import com.dto.UserDto;
+import com.entity.Users;
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>
+public interface UserRepository extends JpaRepository<Users, Integer>
 {
 
-	User findByEmail(String email);
+	Users findByEmail(String email);
 
 	
-	Page<?> findByName(String search, Pageable pagable, Class<User> class1);
+	
+
+	Page<IUserListDto> findByOrderById(Pageable pagable, Class<IUserListDto> class1);
+
+    Page<IUserListDto> findByName(String search, Pageable pagable, Class<IUserListDto> class1);
 
 }

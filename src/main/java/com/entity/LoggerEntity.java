@@ -20,7 +20,7 @@ public class LoggerEntity
 	private int id;
 
 	@OneToOne(fetch=FetchType.LAZY)
-	private User userid;
+	private Users userid;
 
 	private String token;
 	@CreationTimestamp
@@ -32,10 +32,10 @@ public class LoggerEntity
 	public void setId(int id) {
 		this.id = id;
 	}
-	public User getUserid() {
+	public Users getUserid() {
 		return userid;
 	}
-	public void setUserid(User userid) {
+	public void setUserid(Users userid) {
 		this.userid = userid;
 	}
 	public String getToken() {
@@ -56,7 +56,7 @@ public class LoggerEntity
 	public void setExpiredat(Date expiredat) {
 		this.expiredat = expiredat;
 	}
-	public LoggerEntity(int id, User userid, String token, Date createdat, Date expiredat) {
+	public LoggerEntity(int id, Users userid, String token, Date createdat, Date expiredat) {
 		super();
 		this.id = id;
 		this.userid = userid;

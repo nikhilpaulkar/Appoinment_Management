@@ -7,27 +7,46 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ServiceInterface.IUserListDto;
-import com.ServiceInterface.UserServiceInterface;
+import com.ServiceInterface.IRoleListDto;
+
+import com.ServiceInterface.RoleServiceInterface;
 import com.dto.ErrorResponseDto;
+import com.dto.RoleDto;
 import com.dto.SucessResponseDto;
-import com.dto.UserDto;
 import com.exception.ResourceNotFoundException;
 
 @RestController
-@RequestMapping("/user")
-public class UserController 
+@RequestMapping("/role")
+public class RoleController 
 {
+
 	@Autowired
-	private UserServiceInterface userServiceInterface;
+	private RoleServiceInterface roleServiceInterface;
 	
-	// get all users 
+	// add role 
+	@PostMapping()
+	public ResponseEntity<?>addrole(@RequestBody RoleDto roleDto)
+	{
+		try
+		{
+			roleServiceInterface.addrole(roleDto);
+			return new ResponseEntity<>(new SucessResponseDto("success","success","successfully add role"),HttpStatus.ACCEPTED);
+		}catch(Exception e)
+		{
+			return new ResponseEntity<>(new ErrorResponseDto( "role Already exit ","role already exxit"),HttpStatus.BAD_REQUEST);
+		}
+		
+		
+	}
+	
+	// get all roles with pagination
 	@GetMapping()
 	public ResponseEntity<?> getAllusers(
 			@RequestParam(defaultValue = "") String search,
@@ -35,7 +54,7 @@ public class UserController
 			@RequestParam(defaultValue = "5") String pageSize)
 	{
 		
-		Page<IUserListDto> entity= userServiceInterface.getAllUsers(search,pageNumber,pageSize);
+		Page<IRoleListDto> entity= roleServiceInterface.getAllrole(search,pageNumber,pageSize);
 		if(entity.getTotalElements()!=0)
 		{
 			return new ResponseEntity<>(entity.getContent(), HttpStatus.OK);
@@ -46,52 +65,55 @@ public class UserController
 	    }
 	}
 	
-	// get user by id
+	// get by id 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getUserById( @PathVariable Integer id)
+	public ResponseEntity<?>getRoleid(@PathVariable Integer id)
 	{
 		try 
 		{
-            UserDto userDto=this.userServiceInterface.getUserId(id);
-			return new ResponseEntity<>(new SucessResponseDto("Success","Success", userDto),HttpStatus.OK);
+            RoleDto roleDto=this.roleServiceInterface.getRoleId(id);
+			return new ResponseEntity<>(new SucessResponseDto("Success","Success", roleDto),HttpStatus.OK);
 		}catch(ResourceNotFoundException e) 
 		{
 			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
 		}
-	}
+	   }
 	
-	//update by id
+	// update by role id 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateDataByUserId(@RequestBody UserDto userDto,@PathVariable Integer id)
+	public ResponseEntity<?>updateByRoleId(@RequestBody RoleDto roleDto,@PathVariable Integer id)
 	{
 		try
 		{
 			
-		  UserDto userDto1=this.userServiceInterface.updateUser(userDto,id);
-		  return new ResponseEntity<>(new SucessResponseDto("update", "update sucessfully", userDto1),HttpStatus.OK);
+		  RoleDto roleDto1=this.roleServiceInterface.updaterole(roleDto,id);
+		  return new ResponseEntity<>(new SucessResponseDto("update", "update sucessfully", roleDto1),HttpStatus.OK);
 	
 		}catch(Exception e)
 		{
-			return new ResponseEntity<>(new ErrorResponseDto("Please Enter Valid UserId..", "Not Updated Data.."),HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new ErrorResponseDto("Please Enter Valid RoleId..", "Not Updated Data.."),HttpStatus.NOT_FOUND);
 		}
 			
 	}
 	
-	
-	// delete by id 
+	// delete by role id 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable Integer id)
+	public ResponseEntity<?> deleterole(@PathVariable Integer id)
 	{
 
 		try 
 		{
-			this.userServiceInterface.deleteUser(id);
+			this.roleServiceInterface.deleteRole(id);
 			return new  ResponseEntity<>(new SucessResponseDto("Success","Success", "Deleted Successfully!"),HttpStatus.OK);
 		}catch(ResourceNotFoundException e) 
 		{
 
-			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"role Not Found"),HttpStatus.NOT_FOUND);
 	    }
 	}
 	
+
+
 }
+	
+
