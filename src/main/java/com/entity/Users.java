@@ -85,7 +85,8 @@ public class Users implements Serializable
 		return userrole;
 		}
 
-	public void setUserrole(List<UserRoleEntity> userrole) {		this.userrole = userrole;
+	public void setUserrole(List<UserRoleEntity> userrole) {		
+		this.userrole = userrole;
 	}
 
 	

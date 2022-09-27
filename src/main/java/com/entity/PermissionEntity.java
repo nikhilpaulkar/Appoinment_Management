@@ -2,17 +2,23 @@ package com.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Where(clause = "is_active=true")
@@ -44,6 +50,17 @@ public class PermissionEntity implements Serializable
 	private Date updatedAt;
     private boolean isActive=true;
     
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "pk.permission",cascade = CascadeType.ALL)
+	@JsonBackReference
+	private List<RolePermissionEntity> rolePermissionEntity;
+    
+    
+	public List<RolePermissionEntity> getRolePermissionEntity() {
+		return rolePermissionEntity;
+	}
+	public void setRolePermissionEntity(List<RolePermissionEntity> rolePermissionEntity) {
+		this.rolePermissionEntity = rolePermissionEntity;
+	}
 	public int getId() {
 		return id;
 	}
@@ -92,8 +109,9 @@ public class PermissionEntity implements Serializable
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+	
 	public PermissionEntity(int id, String actionName, String method, String baseUrl, String path, Date createdAt,
-			Date updatedAt, boolean isActive) {
+			Date updatedAt, boolean isActive, List<RolePermissionEntity> rolePermissionEntity) {
 		super();
 		this.id = id;
 		this.actionName = actionName;
@@ -103,6 +121,7 @@ public class PermissionEntity implements Serializable
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.isActive = isActive;
+		this.rolePermissionEntity = rolePermissionEntity;
 	}
 	public PermissionEntity() {
 		super();

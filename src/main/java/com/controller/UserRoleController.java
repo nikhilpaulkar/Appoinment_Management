@@ -36,7 +36,7 @@ public class UserRoleController
 			return new ResponseEntity<>(new SucessResponseDto("SUCCESS","SUCEESS",userrolerequest),HttpStatus.OK);
 		}catch (Exception e)
 		{
-			return new ResponseEntity<>("Envalid userid or roleid",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Invalid userid or roleid",HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class UserRoleController
 			return new ResponseEntity<>(new SucessResponseDto("update successfully","updated",userrolerequest),HttpStatus.OK);
 		}catch (Exception e)
 		{
-			return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Invalid role id or user id",HttpStatus.BAD_REQUEST);
 		}
 	}
    
@@ -74,7 +74,7 @@ public class UserRoleController
 			return new ResponseEntity<> (new SucessResponseDto("delete successfully","delete",userrolerequest) ,HttpStatus.OK);
 		}catch(Exception e)
 			{
-				return new ResponseEntity<>("Envalid userid or roleid",HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("Invalid userid or roleid",HttpStatus.BAD_REQUEST);
 			}
 		}
 	
