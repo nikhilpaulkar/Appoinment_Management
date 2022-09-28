@@ -3,17 +3,27 @@ package com.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.entity.Attendess;
 
 public class AppointmentDto 
 {
 	private int id;
 	private String description;
 	private int managerid;
-	
 	private Date createdat;
-	
+	private List<Attendess> attendees;
+
+
 
     
+	
+	
+	public List<Attendess> getAttendees() {
+		return attendees;
+	}
+	public void setAttendees(List<Attendess> attendees) {
+		this.attendees = attendees;
+	}
 	public Date getCreatedat() {
 		return createdat;
 	}
@@ -40,16 +50,13 @@ public class AppointmentDto
 		this.managerid = managerid;
 	}
 	
-	
-	public AppointmentDto(int id, String description, int managerid,Date createdat)
-			 {
+	public AppointmentDto(int id, String description, int managerid, Date createdat, List<Attendess> attendees) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.managerid = managerid;
-		
 		this.createdat = createdat;
-		
+		this.attendees = attendees;
 	}
 	public AppointmentDto() {
 		super();
