@@ -6,16 +6,19 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name="appointment")
 @Where(clause="isactive=true")
@@ -33,11 +36,20 @@ public class Appointment
 	private boolean isactive=true;
 	
 	@ManyToMany(targetEntity = Attendess.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} )
+	@JsonBackReference
 	private List<Attendess> attendees;
 	
+	@OneToOne(fetch=FetchType.LAZY)
+	private Users developerid;
 	
 	
 	
+	public Users getDeveloperid() {
+		return developerid;
+	}
+	public void setDeveloperid(Users developerid) {
+		this.developerid = developerid;
+	}
 	public List<Attendess> getAttendees() {
 		return attendees;
 	}
@@ -76,16 +88,17 @@ public class Appointment
 	}
 	
 	
-	public Appointment(int id, int managerid, Date createdat, String description,boolean isactive,
-			List<Attendess> attendees) {
+	
+	public Appointment(int id, int managerid, Date createdat, String description, boolean isactive,
+			List<Attendess> attendees, Users developerid) {
 		super();
 		this.id = id;
 		this.managerid = managerid;
 		this.createdat = createdat;
 		this.description = description;
-		
 		this.isactive = isactive;
 		this.attendees = attendees;
+		this.developerid = developerid;
 	}
 	public Appointment() {
 		super();

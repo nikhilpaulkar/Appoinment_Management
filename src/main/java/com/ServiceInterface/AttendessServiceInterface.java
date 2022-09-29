@@ -1,5 +1,12 @@
 package com.ServiceInterface;
 
-public interface AttendessServiceInterface {
+import com.dto.AttendessDto;
+import com.entity.Attendess;
+
+public interface AttendessServiceInterface 
+{
+
+
+	Attendess updateStatus(AttendessDto attendeesDto, Integer id);
 
 }

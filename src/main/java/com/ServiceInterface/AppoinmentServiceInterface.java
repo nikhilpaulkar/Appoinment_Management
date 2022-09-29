@@ -11,8 +11,12 @@ import com.entity.Attendess;
 public interface AppoinmentServiceInterface 
 {
 	
-	void deleteAppointment(Integer id);
-	List<Attendess> findAttendeesAppointment(String search, String pageNumber, String pageSize);
-	Appointment createappointment(AppointmentDto appointmentDto, HttpServletRequest request);
+	
+	
+	AppointmentDto createappointment(AppointmentDto appointmentDto, HttpServletRequest request);
+	
+	List<Appointment> findManagerAppointment(String  pageNumber, String pageSize, String name);
+
+	void deleteAppointment(Integer id, HttpServletRequest request);
 	
 }

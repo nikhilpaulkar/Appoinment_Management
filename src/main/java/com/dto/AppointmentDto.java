@@ -11,6 +11,7 @@ public class AppointmentDto
 	private String description;
 	private int managerid;
 	private Date createdat;
+	private int developerid;
 	private List<Attendess> attendees;
 
 
@@ -18,6 +19,12 @@ public class AppointmentDto
     
 	
 	
+	public int getDeveloperid() {
+		return developerid;
+	}
+	public void setDeveloperid(int developerid) {
+		this.developerid = developerid;
+	}
 	public List<Attendess> getAttendees() {
 		return attendees;
 	}
@@ -50,12 +57,15 @@ public class AppointmentDto
 		this.managerid = managerid;
 	}
 	
-	public AppointmentDto(int id, String description, int managerid, Date createdat, List<Attendess> attendees) {
+	
+	public AppointmentDto(int id, String description, int managerid, Date createdat, int developerid,
+			List<Attendess> attendees) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.managerid = managerid;
 		this.createdat = createdat;
+		this.developerid = developerid;
 		this.attendees = attendees;
 	}
 	public AppointmentDto() {

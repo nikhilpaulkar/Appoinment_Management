@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ServiceInterface.AppoinmentServiceInterface;
@@ -25,7 +26,7 @@ import com.dto.ErrorResponseDto;
 
 import com.dto.SucessResponseDto;
 import com.entity.Appointment;
-
+import com.exception.ResourceNotFoundException;
 import com.repository.AppointmentRepository;
 import com.repository.UserRepository;
 import com.webSecurity.JwtTokenUtil;
@@ -54,34 +55,33 @@ public class AppoinmentController
 	{
 		
 
-		Appointment appointment= this.appoinmentServiceInterface.createappointment(appointmentDto, request);
-        return new ResponseEntity<>(appointment, HttpStatus.CREATED);
+		AppointmentDto appointment= this.appoinmentServiceInterface.createappointment(appointmentDto, request);
+        return new ResponseEntity<>(new SucessResponseDto("appointment ","create appointment successfully ","success"), HttpStatus.CREATED);
 
 	}
 
 		
 	// get appointment 
 	@GetMapping("/{all}")
-    public ResponseEntity<List<Appointment>> getAppointmentByManagerId(@RequestHeader("Authorization") String token)
+	public ResponseEntity<List<Appointment>> getAppointmentByManagerId(
+			@RequestParam (defaultValue = "1") String pageNumber, 
+			@RequestParam(defaultValue = "5") String pageSize,
+			@RequestHeader("Authorization") String token)
 	{
-
-	 String temp = token.split(" ")[1];
-     String name = jwtTokenUtil.extractName(temp);
-	 return new ResponseEntity<List<Appointment>>(appointmentRepository.findAllByOrderByTimeAsc(name),HttpStatus.OK);
-
-    }
-
-	
+	  String temp = token.split(" ")[1];
+	  String name = jwtTokenUtil.extractName(temp);
+	  return new ResponseEntity<List<Appointment>>(appoinmentServiceInterface.findManagerAppointment(pageNumber, pageSize,name),HttpStatus.OK);
+	}
 	
 	// delete appointment by id
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?>deleteAppointment(@PathVariable Integer id)
+	public ResponseEntity<?>deleteAppointment(@PathVariable Integer id,HttpServletRequest request)
 	{
 		try
 		{
-			this.appoinmentServiceInterface.deleteAppointment(id);
+			this.appoinmentServiceInterface.deleteAppointment(id,request);
 			return new ResponseEntity<>(new SucessResponseDto("success","success","delete successfully"),HttpStatus.ACCEPTED);
-		}catch(Exception e)
+		}catch(ResourceNotFoundException e)
 		{
 			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(),"appointment not found"),HttpStatus.BAD_REQUEST);
 		}
