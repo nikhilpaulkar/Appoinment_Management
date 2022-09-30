@@ -53,23 +53,33 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 	@Override
 	public AppointmentDto createappointment(AppointmentDto appointmentDto,HttpServletRequest request) 
 	{
-		final String header=request.getHeader("Authorization");
-		String requestToken=header.substring(7);
- 
-		final String email=jwtTokenlUtil.getUsernameFromToken(requestToken);
-	   
-		Users userEntity=userRepository.findByEmail(email);
-        System.out.println("hello"+userRepository.findByEmail(email));
+//		final String header=request.getHeader("Authorization");
+//		String requestToken=header.substring(7);
+// 
+//		final String email=jwtTokenlUtil.getUsernameFromToken(requestToken);
+//	   
+//		userRepository.findByEmail(email);
+//        System.out.println("hello"+userRepository.findByEmail(email));
 		
+//		
+	
+		Users users =userRepository.findById(appointmentDto.getManagerid()).orElseThrow(()->
+		new ResourceNotFoundException("manager id is not found"));
 		Appointment appointment=new Appointment();
 		
 		appointment.setDescription(appointmentDto.getDescription());
 		appointment.setCreatedat(appointmentDto.getCreatedat());
 		appointment.setManagerid(appointmentDto.getManagerid());
-		
 		this.appointmentRepository.save(appointment);
-	    return appointmentDto;
+			
+		Attendess attendess= new  Attendess();
+		attendess.setAppointmentid(appointment);
+		attendess.setDeveloperid(users.getId());	
+		attendess.setStatus(true);
+	    this.attendessRepository.save(attendess);
+		return appointmentDto;
 	}
+	
 	
 	// get all appointment with pagination
 	public List<Appointment> findManagerAppointment(String pageNumber, String pageSize,String name) 
@@ -89,41 +99,35 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 	public void deleteAppointment(Integer id,HttpServletRequest request)
 	{
 		
-        Appointment appointment= appointmentRepository.findById(id).orElseThrow(()-> 
+        appointmentRepository.findById(id).orElseThrow(()-> 
         new ResourceNotFoundException("not Found appointment Id.."));
-		
+             
 		final String header=request.getHeader("Authorization");
 		String requestToken=header.substring(7);
 
 		final String email=jwtTokenlUtil.getUsernameFromToken(requestToken);
 
-		Users userEntity=userRepository.findByEmailContainingIgnoreCase(email);
+	    Users userEntity=userRepository.findByEmailContainingIgnoreCase(email);
 		
 		Integer integerid=userEntity.getId();
 		
+    	UserRoleEntity userRoleEntity= userRoleRepository.findTaskRoleIdByTaskUserId(integerid);
+		System.out.println("ROLE NAME "+userRoleEntity.getTask().getRole().getRoleName());
 		
-    	UserRoleEntity userRoleEntity= userRoleRepository.findByUserById(id);
+		RoleEntity roleEntity1=roleRepository.findByRoleName("manager");
+		System.out.println("role "+roleEntity1);
 		
-		Integer roleEntityId=userRoleEntity.getTask().getRole().getId();
-		
-		RoleEntity roleEntity1=roleRepository.findById(roleEntityId).orElseThrow(()->
-		new ResourceNotFoundException("Not Found Roleid"));
-		String roleName=roleEntity1.getRoleName();
-		
-		if(roleName.equals("manager"))
+		if(userRoleEntity.getTask().getRole().getRoleName()==roleEntity1.getRoleName())
 		{
 			appointmentRepository.deleteById(id);
 		}
 		else
 		{
-			throw new ResourceNotFoundException("Cannot Access.. Only Access to manager the Delete appointment..");
+			throw new ResourceNotFoundException("Cannot Access.. Only manager can Delete appointment..");
 		}
 		
-		///
-		this.appointmentRepository.findById(id).orElseThrow( () ->
-		new ResourceNotFoundException("appointment not found" +id));
-		this.appointmentRepository.deleteById(id);
-
+		
+		
     }
 
 

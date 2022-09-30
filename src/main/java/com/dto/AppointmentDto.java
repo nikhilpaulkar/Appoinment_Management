@@ -1,5 +1,6 @@
 package com.dto;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -7,23 +8,20 @@ import com.entity.Attendess;
 
 public class AppointmentDto 
 {
-	private int id;
+
+	
 	private String description;
 	private int managerid;
-	private Date createdat;
-	private int developerid;
 	private List<Attendess> attendees;
-
+    private Date createdat;
 
 
     
-	
-	
-	public int getDeveloperid() {
-		return developerid;
+    public Date getCreatedat() {
+		return createdat;
 	}
-	public void setDeveloperid(int developerid) {
-		this.developerid = developerid;
+	public void setCreatedat(Date createdat) {
+		this.createdat = createdat;
 	}
 	public List<Attendess> getAttendees() {
 		return attendees;
@@ -31,19 +29,7 @@ public class AppointmentDto
 	public void setAttendees(List<Attendess> attendees) {
 		this.attendees = attendees;
 	}
-	public Date getCreatedat() {
-		return createdat;
-	}
-	public void setCreatedat(Date createdat) {
-		this.createdat = createdat;
-	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -57,20 +43,18 @@ public class AppointmentDto
 		this.managerid = managerid;
 	}
 	
-	
-	public AppointmentDto(int id, String description, int managerid, Date createdat, int developerid,
-			List<Attendess> attendees) {
+    
+	public AppointmentDto(String description, int managerid, List<Attendess> attendees, Date createdat) {
 		super();
-		this.id = id;
 		this.description = description;
 		this.managerid = managerid;
-		this.createdat = createdat;
-		this.developerid = developerid;
 		this.attendees = attendees;
+		this.createdat = createdat;
 	}
-	public AppointmentDto() {
+	public AppointmentDto() 
+	{
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	

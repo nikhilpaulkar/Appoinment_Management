@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +27,7 @@ import com.dto.ErrorResponseDto;
 import com.dto.SucessResponseDto;
 import com.entity.Appointment;
 import com.exception.ResourceNotFoundException;
-import com.repository.AppointmentRepository;
-import com.repository.UserRepository;
+
 import com.webSecurity.JwtTokenUtil;
 
 @RestController
@@ -39,23 +38,17 @@ public class AppoinmentController
 	@Autowired
 	private AppoinmentServiceInterface appoinmentServiceInterface;
 	
-	@Autowired
-	private AppointmentRepository appointmentRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
 	// create appointment
-	//@PreAuthorize("hasrole('posturi')")
 	@PostMapping()
 	public ResponseEntity<?>addAppointment(@RequestBody AppointmentDto appointmentDto,HttpServletRequest request)
 	{
 		
 
-		AppointmentDto appointment= this.appoinmentServiceInterface.createappointment(appointmentDto, request);
+		this.appoinmentServiceInterface.createappointment(appointmentDto, request);
         return new ResponseEntity<>(new SucessResponseDto("appointment ","create appointment successfully ","success"), HttpStatus.CREATED);
 
 	}

@@ -36,20 +36,9 @@ public class Appointment
 	private boolean isactive=true;
 	
 	@ManyToMany(targetEntity = Attendess.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} )
-	@JsonBackReference
+	//@JsonBackReference
 	private List<Attendess> attendees;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	private Users developerid;
-	
-	
-	
-	public Users getDeveloperid() {
-		return developerid;
-	}
-	public void setDeveloperid(Users developerid) {
-		this.developerid = developerid;
-	}
 	public List<Attendess> getAttendees() {
 		return attendees;
 	}
@@ -90,7 +79,7 @@ public class Appointment
 	
 	
 	public Appointment(int id, int managerid, Date createdat, String description, boolean isactive,
-			List<Attendess> attendees, Users developerid) {
+			List<Attendess> attendees) {
 		super();
 		this.id = id;
 		this.managerid = managerid;
@@ -98,11 +87,15 @@ public class Appointment
 		this.description = description;
 		this.isactive = isactive;
 		this.attendees = attendees;
-		this.developerid = developerid;
+		
 	}
 	public Appointment() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public void setAppointmentId(Object getAppointmentId) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

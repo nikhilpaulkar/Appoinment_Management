@@ -22,7 +22,7 @@ public class AttendessServiceImpl implements AttendessServiceInterface
 	
        Attendess  attendess =this.attendessRepository.findById(id).orElseThrow(() ->
        new ResourceNotFoundException("appointment not  Found "+id));
-       attendess.setStatus(attendeesDto.getStatus());
+       attendess.setStatus(attendeesDto.isStatus());
 	   return attendessRepository.save(attendess);
 		
   }

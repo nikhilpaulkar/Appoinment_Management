@@ -2,32 +2,48 @@ package com.dto;
 
 public class AttendessDto 
 {
+  private int attendeesid;
   private int developerid;
-  private String status;
+  private boolean status;
 
-	public int getDeveloperid() {
-		return developerid;
-	}
+  public int getAttendeesid() 
+  {
+	return attendeesid;
+  }
 
-	public void setDeveloperid(int developerid) {
-		this.developerid = developerid;
-	}
+   public void setAttendeesid(int attendeesid) {
+	this.attendeesid = attendeesid;
+  }
 
-	public String getStatus() {
-		return status;
-	}
+  public int getDeveloperid() {
+	return developerid;
+  }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
 
-	public AttendessDto(int developerid, String status) {
-		super();
-		this.developerid = developerid;
-		this.status = status;
-	}
+   public void setDeveloperid(int developerid) {
+	this.developerid = developerid;
+  }
 
-	public AttendessDto() {
+  public boolean isStatus() {
+	return status;
+  }
+
+  public void setStatus(boolean status) {
+	this.status = status;
+  }
+
+  
+
+	public AttendessDto(int attendeesid, int developerid, boolean status) 
+	{
+	super();
+	this.attendeesid = attendeesid;
+	this.developerid = developerid;
+	this.status = status;
+   }
+
+	public AttendessDto() 
+	{
 		super();
 		// TODO Auto-generated constructor stub
 	}

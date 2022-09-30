@@ -21,10 +21,10 @@ public class Attendess
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int developerid;
-	private String status;
+	private boolean status;
 	
 	@ManyToMany(targetEntity = Appointment.class, mappedBy = "attendees", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-	@JsonBackReference
+	//@JsonBackReference
 	private List<Appointment> appointment;
 
 
@@ -45,13 +45,20 @@ public class Attendess
 	public void setDeveloperid(int developerid) {
 		this.developerid = developerid;
 	}
-	public String getStatus() {
+	
+	
+	public boolean isStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
+	public List<Appointment> getAppointment() {
+		return appointment;
+	}
+	public void setAppointment(List<Appointment> appointment) {
+		this.appointment = appointment;
+	}
 	public Appointment getAppointmentid() {
 		return appointmentid;
 	}
@@ -59,11 +66,14 @@ public class Attendess
 		this.appointmentid = appointmentid;
 	}
 	
-	public Attendess(int id, int developerid, String status, Appointment appointmentid) {
+	
+	public Attendess(int id, int developerid, boolean status, List<Appointment> appointment,
+			Appointment appointmentid) {
 		super();
 		this.id = id;
 		this.developerid = developerid;
 		this.status = status;
+		this.appointment = appointment;
 		this.appointmentid = appointmentid;
 	}
 	public Attendess() {
