@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ServiceInterface.AppoinmentServiceInterface;
+import com.ServiceInterface.IAppointmentDto;
+import com.ServiceInterface.IRoleListDto;
 import com.dto.AppointmentDto;
 import com.dto.ErrorResponseDto;
 
@@ -53,17 +55,25 @@ public class AppoinmentController
 
 	}
 
+	
 		
-	// get appointment 
-	@GetMapping("/{all}")
-	public ResponseEntity<List<Appointment>> getAppointmentByManagerId(
-			@RequestParam (defaultValue = "1") String pageNumber, 
-			@RequestParam(defaultValue = "5") String pageSize,
-			@RequestHeader("Authorization") String token)
+	// get appointment with pagination
+	@GetMapping("/all")
+	public ResponseEntity<?> getAllusers(
+			@RequestParam(defaultValue = "") String search,
+			@RequestParam(defaultValue = "1") String pageNumber,
+			@RequestParam(defaultValue = "5") String pageSize)
 	{
-	  String temp = token.split(" ")[1];
-	  String name = jwtTokenUtil.extractName(temp);
-	  return new ResponseEntity<List<Appointment>>(appoinmentServiceInterface.findManagerAppointment(pageNumber, pageSize,name),HttpStatus.OK);
+		
+		Page<IAppointmentDto> entity= appoinmentServiceInterface.getAllAppointment(search,pageNumber,pageSize);
+		if(entity.getTotalElements()!=0)
+		{
+			return new ResponseEntity<>(entity.getContent(), HttpStatus.OK);
+		}
+		else
+		{
+		return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);
+	    }
 	}
 	
 	// delete appointment by id

@@ -1,19 +1,20 @@
 package com.ServiceImpl;
 
-import java.util.List;
+
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Service;
 
 import com.ServiceInterface.AppoinmentServiceInterface;
-import com.ServiceInterface.IRoleListDto;
+import com.ServiceInterface.IAppointmentDto;
+
 import com.dto.AppointmentDto;
-import com.dto.AttendessDto;
+
 import com.entity.Appointment;
 import com.entity.Attendess;
 import com.entity.RoleEntity;
@@ -74,24 +75,29 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 			
 		Attendess attendess= new  Attendess();
 		attendess.setAppointmentid(appointment);
+		
+		
 		attendess.setDeveloperid(users.getId());	
-		attendess.setStatus(true);
+		attendess.setStatus(attendess.isStatus());
 	    this.attendessRepository.save(attendess);
 		return appointmentDto;
 	}
 	
 	
-	// get all appointment with pagination
-	public List<Appointment> findManagerAppointment(String pageNumber, String pageSize,String name) 
-	 {
-//  	 	Users user = userRepository.findByEmail(name);
-//  	 
-// 	 	Pageable paging= new Pagination().getPagination(pageNumber, pageSize);
-//  	 	Page<Appointment> pagedResult= appointmentRepository.findByManagerId(paging, user.getId());
-//  	    return pagedResult.toList();
-//  	    
-      return null;
-	}
+	 // get all appointment with pagination
+	 public Page<IAppointmentDto> getAllAppointment(String search, String pageNumber, String pageSize) 
+	  {
+			Pageable pagable=new Pagination().getPagination(pageNumber, pageSize);
+			if((search=="")||(search==null)||(search.length()==0))
+			{
+				return appointmentRepository.findByOrderById(pagable,IAppointmentDto.class);
+			}
+			else
+			{
+				return  appointmentRepository.findByCreatedAtByAsc(search,pagable,IAppointmentDto.class);
+			}
+			
+	     }
 
 	
     // delete appointment only manager
@@ -106,11 +112,11 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 		String requestToken=header.substring(7);
 
 		final String email=jwtTokenlUtil.getUsernameFromToken(requestToken);
-
+        System.out.println("hello"+userRepository.findByEmail(email));
 	    Users userEntity=userRepository.findByEmailContainingIgnoreCase(email);
 		
 		Integer integerid=userEntity.getId();
-		
+		System.out.println("id"+integerid);
     	UserRoleEntity userRoleEntity= userRoleRepository.findTaskRoleIdByTaskUserId(integerid);
 		System.out.println("ROLE NAME "+userRoleEntity.getTask().getRole().getRoleName());
 		
@@ -129,6 +135,9 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 		
 		
     }
+
+
+	
 
 
 	

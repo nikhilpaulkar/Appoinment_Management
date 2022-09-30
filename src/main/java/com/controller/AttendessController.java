@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ServiceInterface.AttendessServiceInterface;
 import com.dto.AttendessDto;
 import com.dto.ErrorResponseDto;
+import com.entity.Appointment;
 
 @RestController
 @RequestMapping("/attendess")
@@ -23,11 +24,11 @@ public class AttendessController
 	
 	// update status by developer
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateStatusByDeveloper(@RequestBody AttendessDto attendeesDto ,@PathVariable Integer id)
+	public ResponseEntity<?> updateStatusByDeveloper(@PathVariable Integer appointmentid, @RequestBody AttendessDto attendeesDto )
 	{
        try 
 		{
-			this.attendessServiceInterface.updateStatus(attendeesDto, id);
+			this.attendessServiceInterface.updateStatus(attendeesDto, appointmentid);
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		}catch(Exception e)
 		{
