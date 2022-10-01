@@ -100,7 +100,7 @@ public class AuthController
 				calender.add(Calendar.HOUR_OF_DAY, 5);
 				logger.setExpiredAt(calender.getTime());
 				loggerServiceInterface.createLogger(logger, user);
-				return ResponseEntity.ok(new SucessResponseDto("success", "success", new TokenKeys(user.getId(),user.getName(),user.getEmail(), token)));
+				return ResponseEntity.ok(new SucessResponseDto("Login successfully", "success", new TokenKeys(user.getId(),user.getName(),user.getEmail(), token)));
 				
 			}
 			

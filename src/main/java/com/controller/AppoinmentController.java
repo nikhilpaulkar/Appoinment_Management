@@ -41,8 +41,6 @@ public class AppoinmentController
 	private AppoinmentServiceInterface appoinmentServiceInterface;
 	
 	
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
 	
 	// create appointment
 	@PostMapping()
@@ -83,9 +81,10 @@ public class AppoinmentController
 		try
 		{
 			this.appoinmentServiceInterface.deleteAppointment(id,request);
+	
 			return new ResponseEntity<>(new SucessResponseDto("success","success","delete successfully"),HttpStatus.ACCEPTED);
-		}catch(ResourceNotFoundException e)
-		{
+		}catch( ResourceNotFoundException e)
+		{	
 			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(),"appointment not found"),HttpStatus.BAD_REQUEST);
 		}
 	}

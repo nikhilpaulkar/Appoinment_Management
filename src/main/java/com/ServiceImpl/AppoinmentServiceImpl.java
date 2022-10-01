@@ -17,13 +17,13 @@ import com.dto.AppointmentDto;
 
 import com.entity.Appointment;
 import com.entity.Attendess;
-import com.entity.RoleEntity;
+
 import com.entity.UserRoleEntity;
 import com.entity.Users;
 import com.exception.ResourceNotFoundException;
 import com.repository.AppointmentRepository;
 import com.repository.AttendessRepository;
-import com.repository.RoleRepository;
+
 import com.repository.UserRepository;
 import com.repository.UserRoleRepository;
 import com.utility.Pagination;
@@ -36,8 +36,7 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 	@Autowired
 	private AppointmentRepository appointmentRepository;
 
-	@Autowired
-	private RoleRepository roleRepository;
+	
 	@Autowired
 	private AttendessRepository attendessRepository;
 	
@@ -50,37 +49,46 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 	@Autowired
 	private UserRoleRepository  userRoleRepository;
 	
+	
+	
 	// create appointment only manager
 	@Override
 	public AppointmentDto createappointment(AppointmentDto appointmentDto,HttpServletRequest request) 
 	{
-//		final String header=request.getHeader("Authorization");
-//		String requestToken=header.substring(7);
-// 
-//		final String email=jwtTokenlUtil.getUsernameFromToken(requestToken);
-//	   
-//		userRepository.findByEmail(email);
-//        System.out.println("hello"+userRepository.findByEmail(email));
-		
-//		
-	
-		Users users =userRepository.findById(appointmentDto.getManagerid()).orElseThrow(()->
-		new ResourceNotFoundException("manager id is not found"));
-		Appointment appointment=new Appointment();
-		
-		appointment.setDescription(appointmentDto.getDescription());
-		appointment.setCreatedat(appointmentDto.getCreatedat());
-		appointment.setManagerid(appointmentDto.getManagerid());
-		this.appointmentRepository.save(appointment);
-			
-		Attendess attendess= new  Attendess();
-		attendess.setAppointmentid(appointment);
-		
-		
-		attendess.setDeveloperid(users.getId());	
-		attendess.setStatus(attendess.isStatus());
-	    this.attendessRepository.save(attendess);
-		return appointmentDto;
+		final String header=request.getHeader("Authorization");
+		String requestToken=header.substring(7);
+ 
+		final String email=jwtTokenlUtil.getUsernameFromToken(requestToken);
+	   
+		Users user1=userRepository.findByEmail(email);
+        int id=user1.getId();
+        UserRoleEntity userRoleEntity= userRoleRepository.findTaskRoleIdByTaskUserId(id);
+        String name=userRoleEntity.getTask().getRole().getRoleName();
+        System.out.println("Role name"+name);
+      
+       if(name.equals("Manager"))
+       {
+    	 
+    	 Appointment appointment=new Appointment();
+   		
+   		 appointment.setDescription(appointmentDto.getDescription());
+   		 appointment.setCreatedat(appointmentDto.getCreatedat());
+   		 appointment.setManagerid(appointmentDto.getManagerid());
+  		 this.appointmentRepository.save(appointment);
+   			
+   		 Attendess attendess= new  Attendess();
+   		 attendess.setAppointmentid(appointment);  		
+   		
+   		 attendess.setDeveloperid(user1.getId());	
+   		 attendess.setStatus(true);
+   	     this.attendessRepository.save(attendess);
+   		 return appointmentDto; 
+       }
+       else
+       {
+    	   throw new ResourceNotFoundException("Can not access ... only manager can create appointment !!!");
+       }
+
 	}
 	
 	
@@ -101,29 +109,23 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 
 	
     // delete appointment only manager
-	@Override
+    @Override
 	public void deleteAppointment(Integer id,HttpServletRequest request)
 	{
-		
+	
         appointmentRepository.findById(id).orElseThrow(()-> 
+    
         new ResourceNotFoundException("not Found appointment Id.."));
-             
+     
 		final String header=request.getHeader("Authorization");
 		String requestToken=header.substring(7);
-
-		final String email=jwtTokenlUtil.getUsernameFromToken(requestToken);
-        System.out.println("hello"+userRepository.findByEmail(email));
-	    Users userEntity=userRepository.findByEmailContainingIgnoreCase(email);
-		
-		Integer integerid=userEntity.getId();
-		System.out.println("id"+integerid);
-    	UserRoleEntity userRoleEntity= userRoleRepository.findTaskRoleIdByTaskUserId(integerid);
-		System.out.println("ROLE NAME "+userRoleEntity.getTask().getRole().getRoleName());
-		
-		RoleEntity roleEntity1=roleRepository.findByRoleName("manager");
-		System.out.println("role "+roleEntity1);
-		
-		if(userRoleEntity.getTask().getRole().getRoleName()==roleEntity1.getRoleName())
+		final String token=jwtTokenlUtil.getUsernameFromToken(requestToken);
+        
+        Users userEntity=userRepository.findByEmailContainingIgnoreCase(token);
+    	UserRoleEntity userRoleEntity= userRoleRepository.findTaskRoleIdByTaskUserId(userEntity.getId());
+    	String name=userRoleEntity.getTask().getRole().getRoleName();
+    
+		if(name.equals("Manager"))
 		{
 			appointmentRepository.deleteById(id);
 		}

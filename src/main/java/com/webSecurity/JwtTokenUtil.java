@@ -29,7 +29,7 @@ public class JwtTokenUtil
 
    public String getUsernameFromToken(String token)
   {
-	return token;
+	return getClaimFromToken(token,Claims::getSubject);
 
    }
  //retrieve username from jwt token

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ServiceInterface.AttendessServiceInterface;
 import com.dto.AttendessDto;
 import com.dto.ErrorResponseDto;
-import com.entity.Appointment;
+
+import com.dto.SucessResponseDto;
+
 
 @RestController
 @RequestMapping("/attendess")
@@ -24,17 +26,19 @@ public class AttendessController
 	
 	// update status by developer
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateStatusByDeveloper(@PathVariable Integer appointmentid, @RequestBody AttendessDto attendeesDto )
+	public ResponseEntity<?>updatestatusByDeveloper(@RequestBody AttendessDto attendessDto,@PathVariable Integer id)
 	{
-       try 
+		try
 		{
-			this.attendessServiceInterface.updateStatus(attendeesDto, appointmentid);
-			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+			
+		  this.attendessServiceInterface.updateStatus(attendessDto,id);
+		  return new ResponseEntity<>(new SucessResponseDto("update", "update sucessfully", id),HttpStatus.OK);
+	
 		}catch(Exception e)
 		{
-			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "user not found"),HttpStatus.BAD_REQUEST);
-
+			return new ResponseEntity<>(new ErrorResponseDto("Please Enter Valid Appointmetnt id OR developer id ..", "Not Updated Data.."),HttpStatus.NOT_FOUND);
 		}
+			
 	}
 
 }
