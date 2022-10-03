@@ -1,6 +1,6 @@
 package com.controller;
 
-import java.util.List;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,22 +15,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ServiceInterface.AppoinmentServiceInterface;
 import com.ServiceInterface.IAppointmentDto;
-import com.ServiceInterface.IRoleListDto;
+
 import com.dto.AppointmentDto;
 import com.dto.ErrorResponseDto;
 
 import com.dto.SucessResponseDto;
-import com.entity.Appointment;
+
 import com.exception.ResourceNotFoundException;
 
-import com.webSecurity.JwtTokenUtil;
+
 
 @RestController
 @RequestMapping("/appointment")
