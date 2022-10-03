@@ -15,41 +15,50 @@ public class BlockList
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private int id;
-
-  
-  
+   private int blockedby;
    private int blockUser;
 
 	public int getId() {
-	return id;
-   }
+		return id;
+	}
 
-  public void setId(int id) {
-	this.id = id;
-  }
+	public void setId(int id) {
+		this.id = id;
+	}
 
+	public int getBlockedby() {
+		return blockedby;
+	}
 
- 
+	public void setBlockedby(int blockedby) {
+		this.blockedby = blockedby;
+	}
 
-  public int getBlockUser() {
-	return blockUser;
-  }
+	public int getBlockUser() {
+		return blockUser;
+	}
 
-  public void setBlockUser(int blockUser) {
-	this.blockUser = blockUser;
-  }
+	public void setBlockUser(int blockUser) {
+		this.blockUser = blockUser;
+	}
 
+	public BlockList(int id, int blockedby, int blockUser) {
+		super();
+		this.id = id;
+		this.blockedby = blockedby;
+		this.blockUser = blockUser;
+	}
 
- public BlockList(int id,int blockUser) {
-	super();
-	this.id = id;
+	public BlockList() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "BlockList [id=" + id + ", blockedby=" + blockedby + ", blockUser=" + blockUser + "]";
+	}
 	
-	this.blockUser = blockUser;
- }
-
-  public BlockList() {
-	super();
-	// TODO Auto-generated constructor stub
-   }
+	
 
 }

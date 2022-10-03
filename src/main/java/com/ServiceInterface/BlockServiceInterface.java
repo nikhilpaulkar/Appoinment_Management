@@ -1,11 +1,10 @@
 package com.ServiceInterface;
 
-import com.dto.BlockListDto;
-
+import com.entity.BlockList;
 
 public interface BlockServiceInterface 
 {
 
-	BlockListDto blockUser(BlockListDto blockListDto);
+	BlockList blockUser(BlockList blockList);
 
 }

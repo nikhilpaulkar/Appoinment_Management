@@ -6,12 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ServiceInterface.IPermissionListDto;
-import com.ServiceInterface.IUserListDto;
+
 import com.ServiceInterface.PermissionServiceInterface;
 import com.dto.PermissionDto;
-import com.dto.RoleDto;
+
 import com.entity.PermissionEntity;
-import com.entity.RoleEntity;
+
 import com.exception.ResourceNotFoundException;
 import com.repository.PermissionRepository;
 import com.utility.Pagination;

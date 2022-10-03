@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.ServiceInterface.BlockServiceInterface;
-import com.dto.BlockListDto;
+
 import com.dto.ErrorResponseDto;
 import com.dto.SucessResponseDto;
 import com.entity.BlockList;
@@ -26,11 +26,13 @@ public class BlockController
 	
 	
 	@PostMapping
-	public ResponseEntity<?>block(@RequestBody BlockListDto blockListDto)
+	public ResponseEntity<?>block(@RequestBody BlockList blockList)
 	{
 	 try
 		{
-		   blockServiceInterface.blockUser(blockListDto);
+		 System.out.println(blockList.toString());
+		 
+		   blockServiceInterface.blockUser(blockList);
 		   return new ResponseEntity<>( new SucessResponseDto("block ","block Successfully","the user has block"),HttpStatus.ACCEPTED);
 		}catch(ResourceNotFoundException e)
 	    {

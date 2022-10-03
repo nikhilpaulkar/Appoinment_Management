@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ServiceInterface.BlockServiceInterface;
-import com.dto.BlockListDto;
+
 import com.entity.BlockList;
 import com.repository.BlockRepository;
 
@@ -17,13 +17,16 @@ public class BlockServiceImpl implements BlockServiceInterface
    
   // block user 
   @Override
-  public BlockListDto blockUser(BlockListDto  blockListDto) 
+  public BlockList blockUser(BlockList  blockList) 
   {
 	 BlockList block= new BlockList();
-     block.setBlockUser(blockListDto.getBlockUser());
-	 blockRepository.save(block);
-	 return blockListDto;
-	
+	 block.setBlockUser(blockList.getBlockUser());
+	 
+	 System.out.println("blockuser:"+blockList.getBlockUser());
+	 block.setBlockedby(blockList.getBlockedby());
+	 
+	 return blockRepository.save(block);
+	 
   }
 
 
