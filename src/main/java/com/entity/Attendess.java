@@ -23,7 +23,7 @@ public class Attendess
 	private boolean status;
 	
 	@ManyToMany(targetEntity = Appointment.class, mappedBy = "attendees", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-	//@JsonBackReference
+
 	private List<Appointment> appointment;
 
 

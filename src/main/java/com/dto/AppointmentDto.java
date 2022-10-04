@@ -14,10 +14,17 @@ public class AppointmentDto
 	private int managerid;
 	private List<Attendess> attendees;
     private Date createdat;
+    private int developerid;
 
 
     
-    public Date getCreatedat() {
+    public int getDeveloperid() {
+	return developerid;
+}
+public void setDeveloperid(int developerid) {
+	this.developerid = developerid;
+}
+	public Date getCreatedat() {
 		return createdat;
 	}
 	public void setCreatedat(Date createdat) {
@@ -44,12 +51,15 @@ public class AppointmentDto
 	}
 	
     
-	public AppointmentDto(String description, int managerid, List<Attendess> attendees, Date createdat) {
+	
+	public AppointmentDto(String description, int managerid, List<Attendess> attendees, Date createdat,
+			int developerid) {
 		super();
 		this.description = description;
 		this.managerid = managerid;
 		this.attendees = attendees;
 		this.createdat = createdat;
+		this.developerid = developerid;
 	}
 	public AppointmentDto() 
 	{

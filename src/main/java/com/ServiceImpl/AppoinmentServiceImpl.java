@@ -17,13 +17,13 @@ import com.dto.AppointmentDto;
 
 import com.entity.Appointment;
 import com.entity.Attendess;
-
+import com.entity.BlockList;
 import com.entity.UserRoleEntity;
 import com.entity.Users;
 import com.exception.ResourceNotFoundException;
 import com.repository.AppointmentRepository;
 import com.repository.AttendessRepository;
-
+import com.repository.BlockRepository;
 import com.repository.UserRepository;
 import com.repository.UserRoleRepository;
 import com.utility.Pagination;
@@ -49,6 +49,8 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 	@Autowired
 	private UserRoleRepository  userRoleRepository;
 	
+	@Autowired
+	private BlockRepository blockRepository;
 	
 	
 	// create appointment only manager
@@ -64,34 +66,49 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
         int id=user1.getId();
         UserRoleEntity userRoleEntity= userRoleRepository.findTaskRoleIdByTaskUserId(id);
         String name=userRoleEntity.getTask().getRole().getRoleName();
-        System.out.println("Role name"+name);
+        System.out.println("Role name:"+name);
       
-       if(name.equals("Manager"))
-       {
-    	 
+        if(name.equals("Manager"))
+        {
+    	
     	 Appointment appointment=new Appointment();
    		
    		 appointment.setDescription(appointmentDto.getDescription());
    		 appointment.setCreatedat(appointmentDto.getCreatedat());
    		 appointment.setManagerid(appointmentDto.getManagerid());
   		 this.appointmentRepository.save(appointment);
-   			
-   		 Attendess attendess= new  Attendess();
-   		 attendess.setAppointmentid(appointment);  		
-   		
+  	   	   
+  		 
+//  	  BlockList blockList =this.blockRepository.findById(appointmentDto.getDeveloperid()).get();
+//  	  int user =	blockList.getBlockUser();
+//   	  if(appointmentDto.getDeveloperid==blockLit.getBlockUser)
+// 		  {
+//   	   
+//	          throw new ResourceNotFoundException("Not create appointment the user has block");
+// 		  }
+     	 Attendess attendess=this.attendessRepository.findById(appointmentDto.getDeveloperid()).orElseThrow(() -> 
+     	 new ResourceNotFoundException("developer id  not found"));
+  	
+		 attendess.setAppointmentid(appointment); 
+		
    		 attendess.setDeveloperid(user1.getId());	
    		 attendess.setStatus(true);
-   	     this.attendessRepository.save(attendess);
-   		 return appointmentDto; 
-       }
+   		 this.attendessRepository.save(attendess);
+  
+   	     return appointmentDto;
+   		 
+    
+        }
        else
        {
+    	  
     	   throw new ResourceNotFoundException("Can not access ... only manager can create appointment !!!");
        }
 
 	}
 	
 	
+
 	 // get all appointment with pagination
 	 public Page<IAppointmentDto> getAllAppointment(String search, String pageNumber, String pageSize) 
 	  {
@@ -136,7 +153,7 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 		
 		
 		
-    }
+       }
 
 
 	

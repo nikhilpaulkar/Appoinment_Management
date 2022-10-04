@@ -9,6 +9,8 @@ import com.entity.Attendess;
 public interface AttendessRepository extends JpaRepository<Attendess, Integer>
 {
 
+	
+
 
 	
 	

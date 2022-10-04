@@ -36,7 +36,7 @@ public class Appointment
 	private boolean isactive=true;
 	
 	@ManyToMany(targetEntity = Attendess.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} )
-	//@JsonBackReference
+	
 	private List<Attendess> attendees;
 	
 	public List<Attendess> getAttendees() {

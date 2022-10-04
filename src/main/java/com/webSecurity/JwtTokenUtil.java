@@ -32,7 +32,7 @@ public class JwtTokenUtil
 	return getClaimFromToken(token,Claims::getSubject);
 
    }
- //retrieve username from jwt token
+    //retrieve username from jwt token
  	public String getEmailFromToken(String token) {
   
  		return getClaimFromToken(token, Claims::getSubject);

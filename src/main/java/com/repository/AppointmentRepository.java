@@ -22,7 +22,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Integer
 
 	Page<IAppointmentDto> findByCreatedAtByAsc(String search, Pageable pagable, Class<IAppointmentDto> class1);
 	Page<IAppointmentDto> findByOrderById(Pageable pagable, Class<IAppointmentDto> class1);
-
+	
 	
 	
 
