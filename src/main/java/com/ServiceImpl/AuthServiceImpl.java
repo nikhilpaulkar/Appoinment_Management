@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthInterface
 		{
 
 			user = authRepository.findByEmail(email);
-			System.out.println("from database");
+			
 			cache.addInCache(email, email, user);
 
 		} 
@@ -46,11 +46,11 @@ public class AuthServiceImpl implements AuthInterface
 		{
 
 			user = (Users) cache.getFromCache(email, email); 
-            System.out.println("from cache");
+			
 		}
 
 		
-		user = authRepository.findByEmail(email);
+		//user = authRepository.findByEmail(email);
 		if (user == null)
 		{
 			throw new UsernameNotFoundException("User not found with Email: " + email);
@@ -68,6 +68,15 @@ public class AuthServiceImpl implements AuthInterface
 	  {
 		return passwordEncoder.matches(hashpassword, hashpassword);
 	  }
+
+
+
+
+
+		public AuthServiceImpl() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
 
 	
 		

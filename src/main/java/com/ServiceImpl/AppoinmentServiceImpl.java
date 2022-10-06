@@ -80,7 +80,7 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
   	   	   
   		 
 //  	  BlockList blockList =this.blockRepository.findById(appointmentDto.getDeveloperid()).get();
-//  	  int user =	blockList.getBlockUser();
+//  	  int  user =	blockList.getBlockUser();
 //   	  if(appointmentDto.getDeveloperid==blockLit.getBlockUser)
 // 		  {
 //   	   

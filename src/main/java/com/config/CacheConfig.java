@@ -5,7 +5,7 @@ import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
-
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -18,6 +18,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableCaching
+@ComponentScan
 public class CacheConfig 
 {
 	@Value("${spring.redis.host}")
@@ -29,29 +30,6 @@ public class CacheConfig
 	@Value("${spring.redis.password}")
 	private String redisPassword;
 
-	public String getRedisHost() {
-		return redisHost;
-	}
-
-	public void setRedisHost(String redisHost) {
-		this.redisHost = redisHost;
-	}
-
-	public int getRedisPort() {
-		return redisPort;
-	}
-
-	public void setRedisPort(int redisPort) {
-		this.redisPort = redisPort;
-	}
-
-	public String getRedisPassword() {
-		return redisPassword;
-	}
-
-	public void setRedisPassword(String redisPassword) {
-		this.redisPassword = redisPassword;
-	}
 
 	public CacheConfig(String redisHost, int redisPort, String redisPassword) {
 		super();
