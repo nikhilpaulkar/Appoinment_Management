@@ -52,7 +52,7 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 	@Autowired
 	private BlockRepository blockRepository;
 	
-	
+	  
 	// create appointment only manager
 	@Override
 	public AppointmentDto createappointment(AppointmentDto appointmentDto,HttpServletRequest request) 

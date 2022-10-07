@@ -70,10 +70,11 @@ public class JwtTokenUtil
 
 
  	// generate token for user
- 	public String generateToken(Users userDetails) {
+ 	public String generateToken(UserDetails userDetails) {
 
  		Map<String, Object> claims = new HashMap<>();
- 		return doGenerateToken(claims, userDetails.getEmail());
+ 		return doGenerateToken(claims, userDetails.getUsername());
+ 				
 
  	}
 

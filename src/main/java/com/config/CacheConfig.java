@@ -18,7 +18,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableCaching
-@ComponentScan
+@ComponentScan("com")
 public class CacheConfig 
 {
 	@Value("${spring.redis.host}")

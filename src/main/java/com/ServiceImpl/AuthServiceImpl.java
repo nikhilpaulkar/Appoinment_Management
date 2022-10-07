@@ -33,23 +33,23 @@ public class AuthServiceImpl implements AuthInterface
 	 public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException  
 	  {
 		Users user;
-		
 		if (!cache.isKeyExist(email,email))
 		{
 
 			user = authRepository.findByEmail(email);
-			
+			System.out.println("Database");
 			cache.addInCache(email, email, user);
 
-		} 
+		} 	
 		else
 		{
 
 			user = (Users) cache.getFromCache(email, email); 
+			System.out.println("Cache");
 			
 		}
 
-		
+		//
 		//user = authRepository.findByEmail(email);
 		if (user == null)
 		{
