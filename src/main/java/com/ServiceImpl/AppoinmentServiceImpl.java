@@ -51,7 +51,7 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 	
 	@Autowired
 	private BlockRepository blockRepository;
-	
+
 	  
 	// create appointment only manager
 	@Override
@@ -79,19 +79,10 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
   		 this.appointmentRepository.save(appointment);
   	   	   
   		 
-//  	  BlockList blockList =this.blockRepository.findById(appointmentDto.getDeveloperid()).get();
-//  	  int  user =	blockList.getBlockUser();
-//   	  if(appointmentDto.getDeveloperid==blockLit.getBlockUser)
-// 		  {
-//   	   
-//	          throw new ResourceNotFoundException("Not create appointment the user has block");
-// 		  }
-     	 Attendess attendess=this.attendessRepository.findById(appointmentDto.getDeveloperid()).orElseThrow(() -> 
-     	 new ResourceNotFoundException("developer id  not found"));
-  	
-		 attendess.setAppointmentid(appointment); 
+	     Attendess attendess=new Attendess();
 		
-   		 attendess.setDeveloperid(user1.getId());	
+         attendess.setDeveloperid(user1.getId());	
+   		 attendess.setAppointmentid(appointment);
    		 attendess.setStatus(true);
    		 this.attendessRepository.save(attendess);
   

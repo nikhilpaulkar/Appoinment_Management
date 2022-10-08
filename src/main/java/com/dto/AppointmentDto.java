@@ -20,10 +20,10 @@ public class AppointmentDto
     
     public int getDeveloperid() {
 	return developerid;
-}
-public void setDeveloperid(int developerid) {
+   }
+   public void setDeveloperid(int developerid) {
 	this.developerid = developerid;
-}
+   }
 	public Date getCreatedat() {
 		return createdat;
 	}
