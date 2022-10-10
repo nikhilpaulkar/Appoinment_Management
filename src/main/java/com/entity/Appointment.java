@@ -27,8 +27,8 @@ public class Appointment
 { 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private int managerid;
+	private Long id;
+	private Long managerid;
 	@CreationTimestamp
 	private Date createdat;
 	private String description;
@@ -45,16 +45,17 @@ public class Appointment
 	public void setAttendees(List<Attendess> attendees) {
 		this.attendees = attendees;
 	}
-	public int getId() {
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getManagerid() {
+	public Long getManagerid() {
 		return managerid;
 	}
-	public void setManagerid(int managerid) {
+	public void setManagerid(Long managerid) {
 		this.managerid = managerid;
 	}
 	public Date getCreatedat() {
@@ -78,7 +79,8 @@ public class Appointment
 	
 	
 	
-	public Appointment(int id, int managerid, Date createdat, String description, boolean isactive,
+	
+	public Appointment(Long id, Long managerid, Date createdat, String description, boolean isactive,
 			List<Attendess> attendees) {
 		super();
 		this.id = id;
@@ -87,17 +89,11 @@ public class Appointment
 		this.description = description;
 		this.isactive = isactive;
 		this.attendees = attendees;
-		
 	}
 	public Appointment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public void setAppointmentId(Object getAppointmentId) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 
 }

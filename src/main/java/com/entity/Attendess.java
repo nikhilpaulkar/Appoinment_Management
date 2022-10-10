@@ -1,7 +1,9 @@
 package com.entity;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,8 +20,9 @@ public class Attendess
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private int developerid;
+	private Long id;
+	
+	private Long developerid;
 	private boolean status;
 	
 	@ManyToMany(targetEntity = Appointment.class, mappedBy = "attendees", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
@@ -32,20 +35,24 @@ public class Attendess
 	@OneToOne(fetch=FetchType.LAZY)
 	private Appointment appointmentid;
 	
-	public int getId() {
+	
+	
+	
+	
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getDeveloperid() {
+	
+	public Long getDeveloperid() {
 		return developerid;
 	}
-	public void setDeveloperid(int developerid) {
+	public void setDeveloperid(Long developerid) {
 		this.developerid = developerid;
 	}
-	
-	
 	public boolean isStatus() {
 		return status;
 	}
@@ -66,7 +73,11 @@ public class Attendess
 	}
 	
 	
-	public Attendess(int id, int developerid, boolean status, List<Appointment> appointment,
+
+	
+	
+	
+	public Attendess(Long id, Long developerid, boolean status, List<Appointment> appointment,
 			Appointment appointmentid) {
 		super();
 		this.id = id;

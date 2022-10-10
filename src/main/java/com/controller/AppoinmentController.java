@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,7 @@ import com.dto.AppointmentDto;
 import com.dto.ErrorResponseDto;
 
 import com.dto.SucessResponseDto;
-
+import com.entity.Appointment;
 import com.exception.ResourceNotFoundException;
 
 
@@ -43,6 +43,7 @@ public class AppoinmentController
 	
 	
 	// create appointment
+	
 	@PostMapping()
 	public ResponseEntity<?>addAppointment(@RequestBody AppointmentDto appointmentDto,HttpServletRequest request)
 	{
@@ -76,7 +77,7 @@ public class AppoinmentController
 	
 	// delete appointment by id
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?>deleteAppointment(@PathVariable Integer id,HttpServletRequest request)
+	public ResponseEntity<?>deleteAppointment(@PathVariable Long id,HttpServletRequest request)
 	{
 		try
 		{
@@ -86,6 +87,20 @@ public class AppoinmentController
 		}catch( ResourceNotFoundException e)
 		{	
 			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(),"appointment not found"),HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?>getallappointmentwithmanagetid(@PathVariable Long id)
+	{
+		try
+		{
+			Appointment appointment=appoinmentServiceInterface.GetAllAppointmentWithManagerid(id);
+			return new ResponseEntity<>(new SucessResponseDto("success", "get appointment",appointment),HttpStatus.ACCEPTED);
+		}catch(ResourceNotFoundException e)
+		{
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "manager id is not found"),HttpStatus.BAD_REQUEST);
 		}
 	}
 	

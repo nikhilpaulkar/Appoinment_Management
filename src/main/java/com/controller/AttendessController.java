@@ -26,7 +26,7 @@ public class AttendessController
 	
 	// update status by developer
 	@PutMapping("/{id}")
-	public ResponseEntity<?>updatestatusByDeveloper(@RequestBody AttendessDto attendessDto,@PathVariable Integer id)
+	public ResponseEntity<?>updatestatusByDeveloper(@RequestBody AttendessDto attendessDto,@PathVariable Long id)
 	{
 		try
 		{

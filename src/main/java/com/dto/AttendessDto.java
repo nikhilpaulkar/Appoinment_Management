@@ -1,30 +1,37 @@
 package com.dto;
 
+import java.util.ArrayList;
+
 public class AttendessDto 
 {
-  private int attendeesid;
-  private int developerid;
+  private Long attendeesid;
+  private Long developerid;
   private boolean status;
 
-  public int getAttendeesid() 
-  {
+  
+
+  
+
+  
+
+  public Long getAttendeesid() {
 	return attendeesid;
-  }
+}
 
-   public void setAttendeesid(int attendeesid) {
+public void setAttendeesid(Long attendeesid) {
 	this.attendeesid = attendeesid;
-  }
+}
 
-  public int getDeveloperid() {
+  
+  public Long getDeveloperid() {
 	return developerid;
-  }
+}
 
-
-   public void setDeveloperid(int developerid) {
+public void setDeveloperid(Long developerid) {
 	this.developerid = developerid;
-  }
+}
 
-  public boolean isStatus() {
+public boolean isStatus() {
 	return status;
   }
 
@@ -34,13 +41,15 @@ public class AttendessDto
 
   
 
-	public AttendessDto(int attendeesid, int developerid, boolean status) 
-	{
+	
+
+
+	public AttendessDto(Long attendeesid, Long developerid, boolean status) {
 	super();
 	this.attendeesid = attendeesid;
 	this.developerid = developerid;
 	this.status = status;
-   }
+}
 
 	public AttendessDto() 
 	{

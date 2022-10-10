@@ -6,9 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import com.entity.Attendess;
 @Repository
-public interface AttendessRepository extends JpaRepository<Attendess, Integer>
+public interface AttendessRepository extends JpaRepository<Attendess, Long>
 {
 
+	
 	
 
 

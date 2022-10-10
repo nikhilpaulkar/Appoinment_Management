@@ -8,7 +8,8 @@ public interface AttendessServiceInterface
 {
 
 
-	AttendessDto updateStatus(AttendessDto attendeesDto, Integer id);
+	
+	AttendessDto updateStatus(AttendessDto attendeesDto, Long id);
 
 	
 

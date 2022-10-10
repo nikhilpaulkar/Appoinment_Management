@@ -2,6 +2,8 @@ package com.ServiceImpl;
 
 
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,8 @@ import com.ServiceInterface.AppoinmentServiceInterface;
 import com.ServiceInterface.IAppointmentDto;
 
 import com.dto.AppointmentDto;
-
+import com.dto.AttDto;
+import com.dto.AttendessDto;
 import com.entity.Appointment;
 import com.entity.Attendess;
 import com.entity.BlockList;
@@ -67,36 +70,50 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
         UserRoleEntity userRoleEntity= userRoleRepository.findTaskRoleIdByTaskUserId(id);
         String name=userRoleEntity.getTask().getRole().getRoleName();
         System.out.println("Role name:"+name);
-      
-        if(name.equals("Manager"))
+        
+        
+        if(name.equals("manager"))
         {
-    	
-    	 Appointment appointment=new Appointment();
+        	
+        
+       	 Appointment appointment=new Appointment();
    		
    		 appointment.setDescription(appointmentDto.getDescription());
    		 appointment.setCreatedat(appointmentDto.getCreatedat());
    		 appointment.setManagerid(appointmentDto.getManagerid());
-  		 this.appointmentRepository.save(appointment);
-  	   	   
+   		 
+   		 BlockList booklist= blockRepository.findByBlockUser(id);
+   		 
+//   		 if(appointmentDto.getDeveloperid()!=booklist.getBlockUser())
+//   		 {
+//   			 
+//   		 
+//  		  this.appointmentRepository.save(appointment);
+//  	   	   
   		 
+  		
 	     Attendess attendess=new Attendess();
 		
-         attendess.setDeveloperid(user1.getId());	
+         attendess.setDeveloperid(appointmentDto.getDeveloperid());	
    		 attendess.setAppointmentid(appointment);
    		 attendess.setStatus(true);
    		 this.attendessRepository.save(attendess);
   
    	     return appointmentDto;
-   		 
+   		 }
     
-        }
+        
        else
        {
     	  
     	   throw new ResourceNotFoundException("Can not access ... only manager can create appointment !!!");
        }
-
-	}
+        }
+//	else
+//        {
+//        	throw new ResourceNotFoundException("User has block can not create appointent");
+//        }
+//	  }
 	
 	
 
@@ -118,7 +135,7 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 	
     // delete appointment only manager
     @Override
-	public void deleteAppointment(Integer id,HttpServletRequest request)
+	public void deleteAppointment(Long id,HttpServletRequest request)
 	{
 	
         appointmentRepository.findById(id).orElseThrow(()-> 
@@ -132,9 +149,11 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
         Users userEntity=userRepository.findByEmailContainingIgnoreCase(token);
     	UserRoleEntity userRoleEntity= userRoleRepository.findTaskRoleIdByTaskUserId(userEntity.getId());
     	String name=userRoleEntity.getTask().getRole().getRoleName();
-    
-		if(name.equals("Manager"))
+        System.out.println("Role name:"+name);
+
+		if(name.equals("manager"))
 		{
+			
 			appointmentRepository.deleteById(id);
 		}
 		else
@@ -146,6 +165,30 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 		
        }
 
+
+
+	@Override
+	public Appointment GetAllAppointmentWithManagerid(Long id) 
+	{  
+		System.out.println("hello"+id);
+		Appointment appointment= appointmentRepository.findByManagerId(id).orElseThrow(()->
+		new ResourceNotFoundException("manager id is not found"));
+      
+        return appointment;
+          
+          
+           
+	 }
+
+
+
+
+
+
+	
+
+
+	
 
 	
 

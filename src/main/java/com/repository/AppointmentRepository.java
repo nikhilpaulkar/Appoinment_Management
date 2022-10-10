@@ -1,6 +1,10 @@
 package com.repository;
 
 
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,10 +15,12 @@ import com.ServiceInterface.IAppointmentDto;
 
 import com.entity.Appointment;
 
+import io.lettuce.core.dynamic.annotation.Param;
+
 
 @Repository
 
-public interface AppointmentRepository extends JpaRepository<Appointment,Integer>
+public interface AppointmentRepository extends JpaRepository<Appointment,Long>
 {
 	
 	
@@ -22,6 +28,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Integer
 
 	Page<IAppointmentDto> findByCreatedAtByAsc(String search, Pageable pagable, Class<IAppointmentDto> class1);
 	Page<IAppointmentDto> findByOrderById(Pageable pagable, Class<IAppointmentDto> class1);
+	
+	
+	@Transactional
+	@Query(value = "select * from Appointment a where a.managerid=:managerid",nativeQuery = true)
+	Optional<Appointment> findByManagerId(@Param("managerid")  Long managerid);
 	
 	
 	

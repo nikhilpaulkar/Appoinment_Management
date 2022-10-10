@@ -18,7 +18,7 @@ public class AttendessServiceImpl implements AttendessServiceInterface
    
    // update status by developer 
   @Override
-  public AttendessDto updateStatus(AttendessDto attendeesDto, Integer id)
+  public AttendessDto updateStatus(AttendessDto attendeesDto, Long id)
   {
 	
 	    Attendess attendess =attendessRepository.findById(id).orElseThrow(()-> 
