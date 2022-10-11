@@ -2,15 +2,16 @@ package com.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import javax.persistence.Table;
 
 @Entity
@@ -22,22 +23,14 @@ public class Attendess
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
+	
 	private Long developerid;
 	private boolean status;
 	
-	@ManyToMany(targetEntity = Appointment.class, mappedBy = "attendees", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-
-	private List<Appointment> appointment;
-
-
-
-	
-	@OneToOne(fetch=FetchType.LAZY)
-	private Appointment appointmentid;
-	
-	
-	
-	
+	@ManyToOne
+	@JoinColumn(name="appointmentid")
+    private Appointment appointment;
 	
 	
 	public Long getId() {
@@ -46,6 +39,9 @@ public class Attendess
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
+	
 	
 	public Long getDeveloperid() {
 		return developerid;
@@ -59,32 +55,23 @@ public class Attendess
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public List<Appointment> getAppointment() {
+		
+	public Appointment getAppointment() {
 		return appointment;
 	}
-	public void setAppointment(List<Appointment> appointment) {
+	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
-	public Appointment getAppointmentid() {
-		return appointmentid;
-	}
-	public void setAppointmentid(Appointment appointmentid) {
-		this.appointmentid = appointmentid;
-	}
-	
-	
-
 	
 	
 	
-	public Attendess(Long id, Long developerid, boolean status, List<Appointment> appointment,
-			Appointment appointmentid) {
+	
+	public Attendess(Long id, Long developerid, boolean status, Appointment appointment) {
 		super();
 		this.id = id;
 		this.developerid = developerid;
 		this.status = status;
 		this.appointment = appointment;
-		this.appointmentid = appointmentid;
 	}
 	public Attendess() {
 		super();

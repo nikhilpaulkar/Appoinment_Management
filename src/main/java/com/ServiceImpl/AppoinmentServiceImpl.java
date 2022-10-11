@@ -2,7 +2,10 @@ package com.ServiceImpl;
 
 
 
+
+
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,8 +19,7 @@ import com.ServiceInterface.AppoinmentServiceInterface;
 import com.ServiceInterface.IAppointmentDto;
 
 import com.dto.AppointmentDto;
-import com.dto.AttDto;
-import com.dto.AttendessDto;
+
 import com.entity.Appointment;
 import com.entity.Attendess;
 import com.entity.BlockList;
@@ -82,25 +84,34 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
    		 appointment.setCreatedat(appointmentDto.getCreatedat());
    		 appointment.setManagerid(appointmentDto.getManagerid());
    		 
-   		 BlockList booklist= blockRepository.findByBlockUser(id);
+   		// BlockList booklist= blockRepository.findByBlockUser(id);
    		 
 //   		 if(appointmentDto.getDeveloperid()!=booklist.getBlockUser())
 //   		 {
-//   			 
-//   		 
-//  		  this.appointmentRepository.save(appointment);
-//  	   	   
+   			 
+   		 
+  		  this.appointmentRepository.save(appointment);
+ 	   	   
   		 
   		
-	     Attendess attendess=new Attendess();
-		
-         attendess.setDeveloperid(appointmentDto.getDeveloperid());	
-   		 attendess.setAppointmentid(appointment);
-   		 attendess.setStatus(true);
-   		 this.attendessRepository.save(attendess);
-  
-   	     return appointmentDto;
+	      List<Long> shsh=appointmentDto.getDeveloperid();
+	    
+	     ArrayList< Attendess>attend=new ArrayList<>();
+	     for(int i=0;i<shsh.size();i++)
+	     {
+	 	    Attendess attendess=new Attendess();
+	     
+	        attendess.setAppointment(appointment);
+   		    attendess.setDeveloperid(shsh.get(i));
+   		    
+   		    attendess.setStatus(true);
+   		    attend.add(attendess);
+
+   		   
    		 }
+	     this.attendessRepository.saveAll(attend);
+	     return appointmentDto;
+      }
     
         
        else
@@ -108,6 +119,7 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
     	  
     	   throw new ResourceNotFoundException("Can not access ... only manager can create appointment !!!");
        }
+		
         }
 //	else
 //        {
@@ -167,18 +179,7 @@ public  class AppoinmentServiceImpl implements AppoinmentServiceInterface
 
 
 
-	@Override
-	public Appointment GetAllAppointmentWithManagerid(Long id) 
-	{  
-		System.out.println("hello"+id);
-		Appointment appointment= appointmentRepository.findByManagerId(id).orElseThrow(()->
-		new ResourceNotFoundException("manager id is not found"));
-      
-        return appointment;
-          
-          
-           
-	 }
+	
 
 
 

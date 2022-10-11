@@ -6,8 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 
 import com.dto.AppointmentDto;
-import com.dto.AttDto;
-import com.entity.Appointment;
+
 
 
 
@@ -26,8 +25,6 @@ public interface AppoinmentServiceInterface
 
 	void deleteAppointment(Long id, HttpServletRequest request);
 
-
-
-	Appointment GetAllAppointmentWithManagerid(Long id);
+     
                      
 }

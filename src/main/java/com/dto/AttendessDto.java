@@ -4,49 +4,33 @@ import java.util.ArrayList;
 
 public class AttendessDto 
 {
-  private Long attendeesid;
-  private Long developerid;
+ 
+  private ArrayList<Long> developerid;
   private boolean status;
 
   
 
-  
-
-  
-
-  public Long getAttendeesid() {
-	return attendeesid;
-}
-
-public void setAttendeesid(Long attendeesid) {
-	this.attendeesid = attendeesid;
-}
-
-  
-  public Long getDeveloperid() {
+  public ArrayList<Long> getDeveloperid() {
 	return developerid;
 }
 
-public void setDeveloperid(Long developerid) {
+  public void setDeveloperid(ArrayList<Long> developerid) {
 	this.developerid = developerid;
 }
 
-public boolean isStatus() {
+
+  public boolean isStatus() {
 	return status;
-  }
+}
+
 
   public void setStatus(boolean status) {
 	this.status = status;
-  }
-
-  
-
-	
+}
 
 
-	public AttendessDto(Long attendeesid, Long developerid, boolean status) {
+	public AttendessDto(ArrayList<Long> developerid, boolean status) {
 	super();
-	this.attendeesid = attendeesid;
 	this.developerid = developerid;
 	this.status = status;
 }

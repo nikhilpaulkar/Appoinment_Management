@@ -1,11 +1,10 @@
 package com.dto;
 
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
-import com.entity.Attendess;
 
 public class AppointmentDto 
 {
@@ -13,18 +12,19 @@ public class AppointmentDto
 	
 	private String description;
 	private Long managerid;
-	private List<Attendess> attendees;
-    private Date createdat;
-    private Long developerid;
+	private Date createdat;
+    private List<Long>  developerid;
 
 
    
 
 	
-	public Long getDeveloperid() {
+	
+	
+	public List<Long> getDeveloperid() {
 		return developerid;
 	}
-	public void setDeveloperid(Long developerid) {
+	public void setDeveloperid(List<Long> developerid) {
 		this.developerid = developerid;
 	}
 	public Date getCreatedat() {
@@ -32,12 +32,6 @@ public class AppointmentDto
 	}
 	public void setCreatedat(Date createdat) {
 		this.createdat = createdat;
-	}
-	public List<Attendess> getAttendees() {
-		return attendees;
-	}
-	public void setAttendees(List<Attendess> attendees) {
-		this.attendees = attendees;
 	}
 	
 	public String getDescription() {
@@ -58,12 +52,12 @@ public class AppointmentDto
 	}
 	
 	
-	public AppointmentDto(String description, Long managerid, List<Attendess> attendees, Date createdat,
-			Long developerid) {
+	
+	
+	public AppointmentDto(String description, Long managerid, Date createdat, List<Long> developerid) {
 		super();
 		this.description = description;
 		this.managerid = managerid;
-		this.attendees = attendees;
 		this.createdat = createdat;
 		this.developerid = developerid;
 	}

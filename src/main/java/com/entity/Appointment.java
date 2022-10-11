@@ -4,14 +4,14 @@ package com.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,17 +35,12 @@ public class Appointment
 	
 	private boolean isactive=true;
 	
-	@ManyToMany(targetEntity = Attendess.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} )
 	
-	private List<Attendess> attendees;
 	
-	public List<Attendess> getAttendees() {
-		return attendees;
-	}
-	public void setAttendees(List<Attendess> attendees) {
-		this.attendees = attendees;
-	}
+	@OneToMany(mappedBy="appointment")
+    private List<Attendess> attendess;
 	
+
 	public Long getId() {
 		return id;
 	}
@@ -77,18 +72,22 @@ public class Appointment
 		this.isactive = isactive;
 	}
 	
-	
-	
+   public List<Attendess> getAttendess() {
+		return attendess;
+	}
+	public void setAttendess(List<Attendess> attendess) {
+		this.attendess = attendess;
+	}
 	
 	public Appointment(Long id, Long managerid, Date createdat, String description, boolean isactive,
-			List<Attendess> attendees) {
+			List<Attendess> attendess) {
 		super();
 		this.id = id;
 		this.managerid = managerid;
 		this.createdat = createdat;
 		this.description = description;
 		this.isactive = isactive;
-		this.attendees = attendees;
+		this.attendess = attendess;
 	}
 	public Appointment() {
 		super();
