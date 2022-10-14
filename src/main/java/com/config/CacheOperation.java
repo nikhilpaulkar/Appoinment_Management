@@ -30,4 +30,11 @@ public class CacheOperation
 		cc.redisTemplate().delete(key);
 		return;
 	}
+	
+	public void removeAllfromCache()
+	{
+		cc.redisConnectionFactory().getConnection().flushAll();
+				
+	}
+	
 }

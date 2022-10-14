@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ServiceInterface.IPermissionListDto;
 
 import com.ServiceInterface.PermissionServiceInterface;
+import com.config.CacheOperation;
 import com.dto.PermissionDto;
 
 import com.entity.PermissionEntity;
@@ -22,6 +23,8 @@ public class PermissionServiceImpl implements PermissionServiceInterface
     @Autowired
     private PermissionRepository permissionRepository;
     
+    @Autowired
+    private CacheOperation cacheOperation;
     
     // add permission
 	@Override
@@ -97,6 +100,7 @@ public class PermissionServiceImpl implements PermissionServiceInterface
 	{
 		this.permissionRepository.findById(permissionId).orElseThrow( () ->
 		new ResourceNotFoundException("permission Not Found With Id :"+permissionId));
+		cacheOperation.removeAllfromCache();
 		this.permissionRepository.deleteById(permissionId);
 		
 	}
